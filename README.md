@@ -1,0 +1,2 @@
+# mycologeek
+Garden Automation repository
