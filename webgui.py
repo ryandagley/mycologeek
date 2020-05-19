@@ -52,12 +52,12 @@ def get_data(interval):
     curs=conn.cursor()
 
     if interval == None:
-        #curs.execute("SELECT update_time, read_int FROM dhtreadings where read_type = 'TEMPERATURE                                 ' limit 5")
+        #curs.execute("SELECT update_time, read_int FROM dhtreadings where read_type = 'TEMPERATURE' limit 5")
         curs.execute("SELECT * from dhtreadings where read_type = 'TEMPERATURE'")
     else:
         #curs.execute("SELECT * FROM temps WHERE timestamp>datetime('now','-%s hours')" % interval)
-        curs.execute("SELECT * FROM dhtreadings WHERE update_time > datetime('now','-%s hours') and                                  read_type = 'TEMPERATURE'" % interval)
-        #curs.execute("SELECT update_time, read_int FROM dhtreadings WHERE read_type = 'TEMPERATURE                                 ' and update_time>datetime('2020-01-01 21:30:02','-%s hours') AND update_time<=datetime('2020-09-19                                  21:31:02') limit 5" % interval)
+        curs.execute("SELECT * FROM dhtreadings WHERE update_time > datetime('now','-%s hours') and read_type = 'TEMPERATURE'" % interval)
+        #curs.execute("SELECT update_time, read_int FROM dhtreadings WHERE read_type = 'TEMPERATURE' and update_time>datetime('2020-01-01 21:30:02','-%s hours') AND update_time<=datetime('2020-09-19                                  21:31:02') limit 5" % interval)
 
     rows=curs.fetchall()
     #print rows
@@ -130,41 +130,41 @@ def show_stats(option):
     if option is None:
         option = str(24)
 
-#    curs.execute("SELECT timestamp,max(temp) FROM temps WHERE timestamp>datetime('now','-%s hour')                                  AND timestamp<=datetime('now')" % option)
-    curs.execute("SELECT update_time, read_type, max(read_int) FROM dhtreadings WHERE read_type = '                                 TEMPERATURE' and update_time>datetime('2013-09-19 21:30:02','-%s hour') AND update_time<=datetime('                                 2020-09-19 21:31:02')" % option)
+#    curs.execute("SELECT timestamp,max(temp) FROM temps WHERE timestamp>datetime('now','-%s hour') AND timestamp<=datetime('now')" % option)
+    curs.execute("SELECT update_time, read_type, max(read_int) FROM dhtreadings WHERE read_type = 'TEMPERATURE' and update_time>datetime('2013-09-19 21:30:02','-%s hour') AND update_time<=datetime('                                 2020-09-19 21:31:02')" % option)
     rowmax=curs.fetchone()
-    #rowstrmax="{0}&nbsp&nbsp&nbsp{1}C".format(str(rowmax[0]),str(rowmax[1]), str(rowmax[2]), str(r                                 owmax[3]), rowmax[4])
-    rowstrmax="{0}&nbsp&nbsp&nbsp{2}F&nbsp&nbsp{1}".format(str(rowmax[0]),str(rowmax[1]), rowmax[2]                                 )
-#    curs.execute("SELECT timestamp,min(temp) FROM temps WHERE timestamp>datetime('now','-%s hour')                                  AND timestamp<=datetime('now')" % option)
-    curs.execute("SELECT update_time, read_type, min(read_int) FROM dhtreadings WHERE read_type = '                                 TEMPERATURE' and update_time>datetime('2013-09-19 21:30:02','-%s hour') AND update_time<=datetime('                                 2020-09-19 21:31:02')" % option)
+    #rowstrmax="{0}&nbsp&nbsp&nbsp{1}C".format(str(rowmax[0]),str(rowmax[1]), str(rowmax[2]), str(rowmax[3]), rowmax[4])
+    rowstrmax="{0}&nbsp&nbsp&nbsp{2}F&nbsp&nbsp{1}".format(str(rowmax[0]),str(rowmax[1]), rowmax[2])
+#    curs.execute("SELECT timestamp,min(temp) FROM temps WHERE timestamp>datetime('now','-%s hour') AND timestamp<=datetime('now')" % option)
+    curs.execute("SELECT update_time, read_type, min(read_int) FROM dhtreadings WHERE read_type = 'TEMPERATURE' and update_time>datetime('2013-09-19 21:30:02','-%s hour') AND update_time<=datetime('                                 2020-09-19 21:31:02')" % option)
     rowmin=curs.fetchone()
-    rowstrmin="{0}&nbsp&nbsp&nbsp{2}F&nbsp&nbsp{1}".format(str(rowmin[0]),str(rowmin[1]), rowmin[2]                                 )
+    rowstrmin="{0}&nbsp&nbsp&nbsp{2}F&nbsp&nbsp{1}".format(str(rowmin[0]),str(rowmin[1]), rowmin[2])
 
-#    curs.execute("SELECT avg(temp) FROM temps WHERE timestamp>datetime('now','-%s hour') AND times                                 tamp<=datetime('now')" % option)
-    curs.execute("SELECT avg(read_int) FROM dhtreadings WHERE read_type = 'TEMPERATURE' and update_                                 time>datetime('2013-09-19 21:30:02','-%s hour') AND update_time<=datetime('2020-09-19 21:31:02')" %                                  option)
+#    curs.execute("SELECT avg(temp) FROM temps WHERE timestamp>datetime('now','-%s hour') AND timestamp<=datetime('now')" % option)
+    curs.execute("SELECT avg(read_int) FROM dhtreadings WHERE read_type = 'TEMPERATURE' and update_time>datetime('2013-09-19 21:30:02','-%s hour') AND update_time<=datetime('2020-09-19 21:31:02')" %                                  option)
     rowavg=curs.fetchone()
 
-    curs.execute("SELECT update_time, read_type, min(read_int) FROM dhtreadings WHERE read_type = '                                 LIGHT' and update_time > datetime('2013-09-18 00:00:00', '-%s hour')" % option)
+    curs.execute("SELECT update_time, read_type, min(read_int) FROM dhtreadings WHERE read_type = 'LIGHT' and update_time > datetime('2013-09-18 00:00:00', '-%s hour')" % option)
     rowlimin = curs.fetchone()
-    rowlimin = "{0}&nbsp&nbsp&nbsp{2}%&nbsp&nbsp{1}".format(str(rowlimin[0]), str(rowlimin[1]), row                                 limin[2])
+    rowlimin = "{0}&nbsp&nbsp&nbsp{2}%&nbsp&nbsp{1}".format(str(rowlimin[0]), str(rowlimin[1]), rowlimin[2])
 
-    curs.execute("SELECT update_time, read_type, max(read_int) FROM dhtreadings WHERE read_type = '                                 LIGHT' and update_time > datetime('2013-09-18 00:00:00', '-%s hour')" % option)
+    curs.execute("SELECT update_time, read_type, max(read_int) FROM dhtreadings WHERE read_type = 'LIGHT' and update_time > datetime('2013-09-18 00:00:00', '-%s hour')" % option)
     rowlimax = curs.fetchone()
-    rowslightmax="{0}&nbsp&nbsp&nbsp{2}%&nbsp&nbsp{1}".format(str(rowlimax[0]),str(rowlimax[1]), ro                                 wlimax[2])
+    rowslightmax="{0}&nbsp&nbsp&nbsp{2}%&nbsp&nbsp{1}".format(str(rowlimax[0]),str(rowlimax[1]), rowlimax[2])
 
-    curs.execute("SELECT avg(read_int) FROM dhtreadings WHERE read_type = 'LIGHT' and update_time >                                  datetime('2013-09-18 00:00:00', '-%s hour')" % option)
+    curs.execute("SELECT avg(read_int) FROM dhtreadings WHERE read_type = 'LIGHT' and update_time > datetime('2013-09-18 00:00:00', '-%s hour')" % option)
     rowliavg = curs.fetchone()
 
     #MOISTURE
-    curs.execute("SELECT update_time, read_type, min(read_int) FROM dhtreadings WHERE read_type = '                                 MOISTURE' and update_time > datetime('2013-09-18 00:00:00', '-%s hour')" % option)
+    curs.execute("SELECT update_time, read_type, min(read_int) FROM dhtreadings WHERE read_type = 'MOISTURE' and update_time > datetime('2013-09-18 00:00:00', '-%s hour')" % option)
     rowmomin = curs.fetchone()
-    rowmomin = "{0}&nbsp&nbsp&nbsp{2}%&nbsp&nbsp{1}".format(str(rowmomin[0]), str(rowmomin[1]), row                                 momin[2])
+    rowmomin = "{0}&nbsp&nbsp&nbsp{2}%&nbsp&nbsp{1}".format(str(rowmomin[0]), str(rowmomin[1]), rowmomin[2])
 
-    curs.execute("SELECT update_time, read_type, max(read_int) FROM dhtreadings WHERE read_type = '                                 MOISTURE' and update_time > datetime('2013-09-18 00:00:00', '-%s hour')" % option)
+    curs.execute("SELECT update_time, read_type, max(read_int) FROM dhtreadings WHERE read_type = 'MOISTURE' and update_time > datetime('2013-09-18 00:00:00', '-%s hour')" % option)
     rowmomax = curs.fetchone()
-    rowmomax = "{0}&nbsp&nbsp&nbsp{2}%&nbsp&nbsp{1}".format(str(rowmomax[0]), str(rowmomax[1]), row                                 momax[2])
+    rowmomax = "{0}&nbsp&nbsp&nbsp{2}%&nbsp&nbsp{1}".format(str(rowmomax[0]), str(rowmomax[1]), rowmomax[2])
 
-    curs.execute("SELECT avg(read_int) FROM dhtreadings WHERE read_type = 'MOISTURE' and update_tim                                 e > datetime('2013-09-18 00:00:00', '-%s hour')" % option)
+    curs.execute("SELECT avg(read_int) FROM dhtreadings WHERE read_type = 'MOISTURE' and update_time > datetime('2013-09-18 00:00:00', '-%s hour')" % option)
     rowmoavg = curs.fetchone()
 
     print "<hr>"
@@ -201,12 +201,12 @@ def show_stats(option):
 
     print "<h2>Most recent 5:</h2>"
     print "<table>"
-    print "<tr><td><strong>Record #</strong></td><td><strong>Sensor Name</strong></td><td><strong>D                                 ate/Time</strong></td><td><strong>Sensor Type</strong></td><td><strong>Metric</strong></td></tr>"
+    print "<tr><td><strong>Record #</strong></td><td><strong>Sensor Name</strong></td><td><strong>Date/Time</strong></td><td><strong>Sensor Type</strong></td><td><strong>Metric</strong></td></tr>"
 
-#    rows=curs.execute("SELECT * FROM temps WHERE timestamp>datetime('new','-1 hour') AND timestamp                                 <=datetime('new')")
-    rows=curs.execute("SELECT * FROM dhtreadings WHERE update_time>datetime('2013-09-19 21:30:02','                                 -1 hour') AND update_time<=datetime('2020-09-19 21:31:02') limit 5")
+#    rows=curs.execute("SELECT * FROM temps WHERE timestamp>datetime('new','-1 hour') AND timestamp<=datetime('new')")
+    rows=curs.execute("SELECT * FROM dhtreadings WHERE update_time>datetime('2013-09-19 21:30:02','-1 hour') AND update_time<=datetime('2020-09-19 21:31:02') limit 5")
     for row in rows:
-        rowstr="<tr><td>{0}&emsp;&emsp;</td><td>{1} F</td><td>{2}</td><td>{3}</td><td>{4}</td></tr>                                 ".format(str(row[0]),str(row[1]),str(row[2]),str(row[3]), row[4])
+        rowstr="<tr><td>{0}&emsp;&emsp;</td><td>{1} F</td><td>{2}</td><td>{3}</td><td>{4}</td></tr>".format(str(row[0]),str(row[1]),str(row[2]),str(row[3]), row[4])
         print rowstr
     print "</table>"
 
